@@ -2,28 +2,23 @@ import React, { Component } from 'react';
 
 class WordsRow extends Component {
 
-    shuffleValues() {
-                
-        var iloscSort = 15;
-        var lk = this.props.row.length;
-        var w, k, p, i, j; //indeksy
-
-        // wymieszanie wyrazów w wierszu
-            for (k=0; k<=iloscSort; k++) {
-               	i = Math.floor(Math.random()*lk); // losowo wybrana 1 kolumna
-		 		j = Math.floor(Math.random()*lk); // losowo wybrana 2 kolumna
-                if (i != j) {
-             	    p = this.props.row[i];
-                    this.props.row[i] = this.props.row[j];
-                    this.props.row[j] = p;
-                }
-            }
+    shuffle(array) {
+        let counter = array.length;
+        while (counter > 0) {
+            // pick random row
+            let index = Math.floor(Math.random() * counter);
+            // decrese counter by 1
+            counter--;
+            // and swap the last row with it
+            let temp = array[counter];
+            array[counter] = array[index]
+            array[index] = temp;
+        }
     }
 
     render() {
-        
-        this.shuffleValues();
         var row = this.props.row;
+        this.shuffle(row);
 
         return (
             <tr>

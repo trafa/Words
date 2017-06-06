@@ -3,32 +3,24 @@ import WordsRow from './WordsRow';
 
 class WordsTable extends Component {
 
-    shuffleRows() {
-
-        var iloscSort = 15;
-        var lw = this.props.words.length;
-        var lk = this.props.words[0].length;
-        var w, k, p, i, j; //indeksy
-
-        // wymieszanie wierszy
-		for (w=0; w <= iloscSort; w++) {
-		    i = Math.floor(Math.random()*lw) // losowo wybrany 1 wiersz
-		 	j = Math.floor(Math.random()*lw) // losowo wybrany 2 wiersz
-		 	if (i != j) { 
-		 		for (k=0; k<= lk-1; k++) {
-		 			p = this.props.words[i][k] 
-		 			this.props.words[i][k] = this.props.words[j][k]
-		 			this.props.words[j][k] = p
-		 		}
-		 	}
-		}
-
+    shuffle(array) {
+        let counter = array.length;
+        while (counter > 0) {
+            // pick random row
+            let index = Math.floor(Math.random() * counter);
+            // decrese counter by 1
+            counter--;
+            // and swap the last row with it
+            let temp = array[counter];
+            array[counter] = array[index]
+            array[index] = temp;
+        }
     }
 
     render() {
         var rows = [];
 
-        this.shuffleRows();
+        this.shuffle(this.props.words);
         this.props.words.forEach((word) => {
             rows.push(<WordsRow row={word} />);
         });
