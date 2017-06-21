@@ -3,6 +3,19 @@ import WordsRow from './WordsRow';
 
 class WordsTable extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {rows: this.shuffle(this.props.words)};
+        
+        this.myClick = this.myClick.bind(this);
+    } 
+
+    myClick() {
+        this.setState({
+            rows: this.shuffle(this.props.words)
+        });
+    }
+
     shuffle(array) {
         let counter = array.length;
         while (counter > 0) {
@@ -15,14 +28,14 @@ class WordsTable extends Component {
             array[counter] = array[index]
             array[index] = temp;
         }
+        return array;
     }
 
     render() {
         var rows = [];
 
-        this.shuffle(this.props.words);
-        this.props.words.forEach((word) => {
-            rows.push(<WordsRow row={word} />);
+        this.state.rows.forEach((row) => {
+            rows.push(<WordsRow key={row} row={row} />);
         });
 
         return (
@@ -39,6 +52,9 @@ class WordsTable extends Component {
                     </thead>
                     <tbody>
                         {rows}
+                        <tr><td colSpan="5">
+                        <button onClick={this.myClick}>Refresh</button>
+                        </td></tr>
                     </tbody>
                 </table>
             </div>

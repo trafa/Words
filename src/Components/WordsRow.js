@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 class WordsRow extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {row: this.shuffle(this.props.row)};
+    }
+
     shuffle(array) {
         let counter = array.length;
         while (counter > 0) {
@@ -14,11 +19,11 @@ class WordsRow extends Component {
             array[counter] = array[index]
             array[index] = temp;
         }
+        return array;
     }
 
     render() {
-        var row = this.props.row;
-        this.shuffle(row);
+        var row = this.shuffle(this.state.row);
 
         return (
             <tr>
